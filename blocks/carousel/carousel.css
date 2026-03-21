@@ -1,187 +1,258 @@
-/* carousel.css — AEM Block */
-
-.carousel-wrapper {
-  width: 100%;
-  overflow: hidden;
-}
+/* ============================================================
+   AEM Block – Carousel
+   ============================================================ */
 
 .carousel {
   position: relative;
   width: 100%;
   overflow: hidden;
+  user-select: none;
+  outline: none;
+  --carousel-content-pad: 2rem;
+  --carousel-dot-size: 8px;
+  --carousel-btn-size: 48px;
+  --carousel-btn-bg: rgba(255, 255, 255, 0.18);
+  --carousel-btn-hover-bg: rgba(255, 255, 255, 0.38);
+  --carousel-overlay: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.28) 45%,
+    transparent 100%
+  );
 }
 
-/* Track that holds all slides */
+/* ── wrapper ─────────────────────────────────────────────── */
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* ── track ───────────────────────────────────────────────── */
 .carousel-track {
   display: flex;
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  will-change: transform;
-}
-
-/* Each slide */
-.carousel-slide {
-  min-width: 100%;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-@media (min-width: 600px) {
-  .carousel-slide {
-    flex-direction: row;
-    align-items: center;
-  }
-}
-
-/* Slide image container */
-.carousel-slide-image {
-  flex: 0 0 100%;
-  overflow: hidden;
-}
-
-@media (min-width: 600px) {
-  .carousel-slide-image {
-    flex: 0 0 55%;
-  }
-}
-
-.carousel-slide-image picture {
-  display: block;
   width: 100%;
-  height: 100%;
+  will-change: transform;
+  cursor: grab;
 }
 
-.carousel-slide-image img {
+.carousel-track:active {
+  cursor: grabbing;
+}
+
+/* ── slide ───────────────────────────────────────────────── */
+.carousel-slide {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+
+@media (max-width: 600px) {
+  .carousel-slide {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+/* ── image ───────────────────────────────────────────────── */
+.carousel-image {
+  position: center;
+  inset: 0;
+  z-index: 0;
+}
+
+.carousel-image picture,
+.carousel-image img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-  aspect-ratio: 1 / 1;
+  pointer-events: none;
 }
 
-/* Slide text container */
-.carousel-slide-text {
-  flex: 1;
-  padding: 2rem 1.5rem;
-  background-color: #fff;
+/* overlay */
+.carousel-slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--carousel-overlay);
+  z-index: 1;
+  pointer-events: none;
 }
 
-@media (min-width: 600px) {
-  .carousel-slide-text {
-    padding: 3rem 2.5rem;
-  }
+/* ── content (overlaid on image) ─────────────────────────── */
+.carousel-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--carousel-content-pad) calc(var(--carousel-content-pad) * 1.5);
+  pointer-events: none;
 }
 
-/* Slides that have no text (image-only) */
-.carousel-slide-text:empty {
-  display: none;
-}
-
-.carousel-slide-text h2 {
-  font-size: 1.4rem;
+/* ── title ───────────────────────────────────────────────── */
+.slide-title {
+  margin: 0 0 0.5em;
+  font-size: clamp(1.25rem, 3.5vw, 2.5rem);
   font-weight: 700;
-  line-height: 1.3;
-  margin: 0 0 1rem;
-  color: #1a1a1a;
+  color: #fff;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+
+  /* animate-in: slide up from below */
+  /* transform: translateY(28px); */
+  opacity: 0;
+  /* transition:
+    transform 0.55s cubic-bezier(0.22, 0.9, 0.36, 1),
+    opacity 0.55s ease; */
 }
 
-@media (min-width: 600px) {
-  .carousel-slide-text h2 {
-    font-size: 1.75rem;
-  }
+.slide-title.title-visible {
+  transform: translateY(0px);
+  opacity: 1;
 }
 
-.carousel-slide-text p {
-  font-size: 0.95rem;
-  line-height: 1.65;
-  color: #4a4a4a;
-  margin: 0 0 0.75rem;
+/* ── description ─────────────────────────────────────────── */
+.slide-desc {
+  margin: 0;
+  font-size: clamp(0.875rem, 1.8vw, 1.1rem);
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.55;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+  max-width: 640px;
+
+  /* animate-in: slide up, delayed after title */
+  /* transform: translateY(20px); */
+  opacity: 0;
+  /* transition:
+    transform 0.5s cubic-bezier(0.22, 0.9, 0.36, 1),
+    opacity 0.5s ease; */
 }
 
-.carousel-slide-text p:last-child {
-  margin-bottom: 0;
+.slide-desc.desc-visible {
+  transform: translateY(0);
+  opacity: 1;
 }
 
-.carousel-slide-text a {
-  color: #0066cc;
+/* links inside content */
+.carousel-content a {
+  color: #fff;
+  font-weight: 600;
+  pointer-events: all;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.carousel-slide-text a:hover {
-  color: #004499;
-}
-
-/* Navigation buttons */
+/* ── nav buttons ─────────────────────────────────────────── */
 .carousel-nav {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  inset: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
   z-index: 10;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  width: 2.75rem;
-  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.75rem;
+}
+
+.carousel-btn {
+  pointer-events: all;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: var(--carousel-btn-size);
+  height: var(--carousel-btn-size);
+  border: none;
+  border-radius: 50%;
+  background: var(--carousel-btn-bg);
+  backdrop-filter: blur(6px) saturate(1.4);
+  -webkit-backdrop-filter: blur(6px) saturate(1.4);
+  color: #fff;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  transition: background 0.2s, box-shadow 0.2s;
-  padding: 0;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    opacity 0.2s ease;
+  outline: none;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 }
 
-.carousel-nav:hover {
-  background: #fff;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+.carousel-btn:hover {
+  background: var(--carousel-btn-hover-bg);
+  transform: scale(1.08);
 }
 
-.carousel-nav svg {
-  width: 1rem;
-  height: 1rem;
-  stroke: #1a1a1a;
-  fill: none;
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.carousel-btn:active {
+  transform: scale(0.95);
 }
 
-.carousel-nav-prev {
-  left: 0.75rem;
+.carousel-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
 }
 
-.carousel-nav-next {
-  right: 0.75rem;
+.carousel-btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
-/* Dots indicator */
+/* ── dots ────────────────────────────────────────────────── */
 .carousel-dots {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
   display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 1rem 0 0.5rem;
+  align-items: center;
+  gap: 8px;
 }
 
 .carousel-dot {
-  width: 8px;
-  height: 8px;
+  width: var(--carousel-dot-size);
+  height: var(--carousel-dot-size);
   border-radius: 50%;
-  background: #ccc;
   border: none;
-  cursor: pointer;
   padding: 0;
-  transition: background 0.25s, transform 0.25s;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.45);
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease,
+    width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  outline: none;
+  flex-shrink: 0;
 }
 
-.carousel-dot.active {
-  background: #1a1a1a;
-  transform: scale(1.25);
+.carousel-dot.is-active {
+  background: #fff;
+  width: calc(var(--carousel-dot-size) * 1);
+  border-radius: calc(var(--carousel-dot-size) / 2);
+  transform: scale(1);
 }
 
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .carousel-track {
-    transition: none;
+.carousel-dot:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+/* ── responsive ──────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .carousel-content {
+    padding: 1rem;
+  }
+
+  .carousel-nav {
+    padding: 0 0.25rem;
+  }
+
+  .carousel-btn {
+    --carousel-btn-size: 38px;
   }
 }
