@@ -1,0 +1,187 @@
+/* carousel.css — AEM Block */
+
+.carousel-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Track that holds all slides */
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+/* Each slide */
+.carousel-slide {
+  min-width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 600px) {
+  .carousel-slide {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* Slide image container */
+.carousel-slide-image {
+  flex: 0 0 100%;
+  overflow: hidden;
+}
+
+@media (min-width: 600px) {
+  .carousel-slide-image {
+    flex: 0 0 55%;
+  }
+}
+
+.carousel-slide-image picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-slide-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  aspect-ratio: 1 / 1;
+}
+
+/* Slide text container */
+.carousel-slide-text {
+  flex: 1;
+  padding: 2rem 1.5rem;
+  background-color: #fff;
+}
+
+@media (min-width: 600px) {
+  .carousel-slide-text {
+    padding: 3rem 2.5rem;
+  }
+}
+
+/* Slides that have no text (image-only) */
+.carousel-slide-text:empty {
+  display: none;
+}
+
+.carousel-slide-text h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 1rem;
+  color: #1a1a1a;
+}
+
+@media (min-width: 600px) {
+  .carousel-slide-text h2 {
+    font-size: 1.75rem;
+  }
+}
+
+.carousel-slide-text p {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #4a4a4a;
+  margin: 0 0 0.75rem;
+}
+
+.carousel-slide-text p:last-child {
+  margin-bottom: 0;
+}
+
+.carousel-slide-text a {
+  color: #0066cc;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.carousel-slide-text a:hover {
+  color: #004499;
+}
+
+/* Navigation buttons */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: background 0.2s, box-shadow 0.2s;
+  padding: 0;
+}
+
+.carousel-nav:hover {
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-nav svg {
+  width: 1rem;
+  height: 1rem;
+  stroke: #1a1a1a;
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.carousel-nav-prev {
+  left: 0.75rem;
+}
+
+.carousel-nav-next {
+  right: 0.75rem;
+}
+
+/* Dots indicator */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 0 0.5rem;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ccc;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s, transform 0.25s;
+}
+
+.carousel-dot.active {
+  background: #1a1a1a;
+  transform: scale(1.25);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track {
+    transition: none;
+  }
+}
