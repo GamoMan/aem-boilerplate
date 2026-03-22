@@ -1,0 +1,145 @@
+/* accordion block */
+.accordion {
+  --accordion-bg: #fff; /* White background as requested */
+  --accordion-border-color: rgba(0, 0, 0, 0.1); /* Border color for dividers */
+  --accordion-text-color: #333; /* Darker text color for visibility */
+  --accordion-header-bg-hover: rgba(0, 0, 0, 0.05); /* Light hover effect */
+  --accordion-content-border-top: rgba(0, 0, 0, 0.1); /* Light border for content */
+
+  display: flex;
+  flex-direction: column;
+  /* Removed gap here to let item borders handle separation */
+  padding: 0; /* Adjusted padding as outer border is removed */
+  border-radius: 8px;
+  background: var(--accordion-bg);
+  backdrop-filter: blur(10px) saturate(1.5); /* Keep glass effect */
+  -webkit-backdrop-filter: blur(10px) saturate(1.5);
+  border: none; /* Removed outer border */
+}
+
+.accordion-item {
+  border-radius: 0; /* Remove individual item radius for continuous look */
+  overflow: hidden;
+  color: var(--accordion-text-color);
+  border-bottom: 1px solid var(--accordion-border-color); /* Dividing line */
+}
+
+.accordion-item:last-child {
+  border-bottom: none; /* No border on the last item */
+}
+
+.accordion-header {
+  display: flex;
+  width: 100%;
+  padding: 15px 20px;
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  color: inherit;
+  transition: background-color 0.3s ease;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.accordion-item-title {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accordion-header:hover,
+.accordion-header[aria-expanded="true"] {
+  background-color: var(--accordion-header-bg-hover);
+}
+
+.accordion-header::after {
+  content: "";
+  display: inline-block;
+  width: 16px; /* SVG width */
+  height: 16px; /* SVG height */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpolyline points=\'6 9 12 15 18 9\'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.3s ease;
+  transform: rotate(0deg); /* Down arrow initially */
+  margin-left: 10px;
+  flex-shrink: 0;
+}
+
+.accordion-header[aria-expanded="true"]::after {
+  transform: rotate(180deg); /* Up arrow when expanded */
+}
+
+.accordion-content {
+  padding: 0 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+  box-sizing: border-box;
+  border-top: 1px solid transparent; /* default transparent border */
+}
+
+.accordion-content[aria-hidden="false"] {
+  max-height: 1000px; /* Increased max-height to ensure content is visible */
+  padding: 15px 20px;
+  border-top: 1px solid var(--accordion-content-border-top);
+}
+
+.accordion-content p {
+  margin: 0 0 10px 0;
+  line-height: 1.6;
+}
+
+.accordion-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* High Contrast Mode */
+/* This assumes a class like .high-contrast is added to a parent element or body */
+body.high-contrast .accordion,
+.high-contrast .accordion {
+  --accordion-bg: #000; /* Black background */
+  --accordion-border-color: #fff; /* White border for dividers */
+  --accordion-text-color: #fff; /* White text */
+  --accordion-header-bg-hover: #333; /* Darker gray on hover */
+  --accordion-content-border-top: #eee; /* Light gray border for content */
+  
+  border: none; /* No outer border in high contrast */
+}
+
+body.high-contrast .accordion-item {
+  border-bottom: 2px solid var(--accordion-border-color); /* Thicker border for dividers */
+}
+
+body.high-contrast .accordion-header,
+.high-contrast .accordion-header {
+  color: var(--accordion-text-color);
+}
+
+body.high-contrast .accordion-content,
+.high-contrast .accordion-content {
+  color: var(--accordion-text-color);
+}
+
+/* Mobile responsiveness (stacked by default, no special media query for stacking) */
+/* The default flex-direction: column and gap already handle stacking on small screens */
+
+@media (min-width: 600px) {
+  .accordion {
+    padding: 0; /* No outer padding on larger screens either */
+  }
+
+  .accordion-header {
+    font-size: 1.2em;
+    padding: 20px 25px;
+  }
+
+  .accordion-content[aria-hidden="false"] {
+    padding: 20px 25px;
+  }
+}
