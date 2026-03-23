@@ -1,0 +1,219 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .saving.hide-result-section{
+    display: none;
+  }
+
+  .saving.show-result-section{
+    display: block;
+  }
+  
+  .tax-saving-grid {
+    display: grid;
+  }
+
+  .tax-saving-grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .tax-saving-grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tax-saving-grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @media (min-width: 768px) {
+
+    /* md breakpoint for Tailwind */
+    .md\\:tax-saving-grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+
+@layer base {
+  @font-face {
+    font-family: "BBL Sans";
+    src: local("BBL Sans"),
+      url("/fonts/BBLSans-Regular.woff") format("woff"),
+      url("/fonts/BBLSans-Regular.woff2") format("woff2");
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "BBL Sans Medium";
+    src: local("BBL Sans Medium"),
+      url("/fonts/BBLSans-medium.woff") format("woff"),
+      url("/fonts/BBLSans-medium.woff2") format("woff2");
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "BBL Sans Bold";
+    src: local("BBL Sans Bold"),
+      url("/fonts/BBLSans-bold.woff") format("woff"),
+      url("/fonts/BBLSans-bold.woff2") format("woff2");
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "BBL Sans Looped";
+    src: local("BBL Sans Looped"),
+      url("/fonts/bblsans_looped-regular.woff") format("woff"),
+      url("/fonts/bblsans_looped-regular.woff2") format("woff2");
+    font-style: normal;
+  }
+}
+
+
+@layer base {
+
+  img,
+  svg,
+  video,
+  canvas,
+  audio,
+  iframe,
+  embed,
+  object {
+    display: unset;
+    vertical-align: text-top;
+  }
+
+  /* img,
+  video {
+    max-width: inherit;
+    height: inherit;
+  } */
+
+  .fincal-grid.grid {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .fincal-grid.grid:before {
+    content: unset;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-bbl font-default-size;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bbl-bold;
+  }
+
+  .flex.flex-wrap.fincal-flex-wrap {
+    margin: 0;
+    --webkit-justify-content: unset;
+    justify-content: unset;
+    flex-direction: unset;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  #header .logo {
+    float: none;
+    max-width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    display: block;
+  }
+
+  #header .logo>img {
+    max-width: 100%;
+    height: 38px;
+  }
+}
+
+@media (min-width: 992px) {
+  .fincal-grid.grid {
+    width: 100%;
+  }
+}
+
+/* Custom styles for ResultsPage to remove padding from columns inside the saving recommendation box on small screens */
+.results-saving-grid.grid:before,
+.fincal-grid.grid:before {
+  content: unset;
+}
+
+@media only screen and (max-width: 767px) {
+
+  .results-saving-grid.grid,
+  .fincal-grid.grid {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  [class*=col-span-] {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+
+@media only screen and (min-width: 761px) {
+  .fincal-grid.grid {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  #header .logo {
+    max-width: 50%;
+  }
+}
+
+[class*=hide-content] {
+  display: none;
+}
+
+[class*=show-content] {
+  display: block;
+}
+
+.retirement-notes ul {
+  margin-left: 1.5rem;
+}
+
+.retirement-notes ul>li {
+  list-style: disc;
+}
+
+#root-saving-tools .label-width {
+  min-width: 120px;
+}
+
+.disabled\:opacity-50:disabled {
+    opacity: 1!important;
+    color: #939399!important;
+    background: transparent;
+    border: 2px solid #e3e3e5!important;
+}
+
+.bg-primary.disabled\:opacity-50:disabled {
+    opacity: 1!important;
+    background: #e3e3e5!important;
+    border: 2px solid #e3e3e5!important;
+}

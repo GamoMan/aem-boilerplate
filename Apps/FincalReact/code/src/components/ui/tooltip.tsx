@@ -1,0 +1,85 @@
+import * as React from "react"
+import * as TooltipPrimitive from "@radix-ui/react-tooltip"
+
+import { cn } from "@/lib/utils"
+import { useIsMobile } from "@/hooks/use-mobile"
+
+const TooltipProvider = TooltipPrimitive.Provider
+
+const TooltipContext = React.createContext({
+  isMobile: false,
+  open: false,
+  setOpen: (open: boolean) => {},
+})
+
+const Tooltip = ({
+  children,
+  ...props
+}: React.ComponentProps<typeof TooltipPrimitive.Root>) => {
+  const [open, setOpen] = React.useState(false)
+  const isMobile = useIsMobile()
+
+  React.useEffect(() => {
+    const handleOutsideClick = () => {
+      setOpen(false)
+    }
+
+    if (open && isMobile) {
+      document.addEventListener("touchstart", handleOutsideClick)
+    }
+
+    return () => {
+      document.removeEventListener("touchstart", handleOutsideClick)
+    }
+  }, [open, isMobile])
+
+  return (
+    <TooltipContext.Provider value={{ isMobile, open, setOpen }}>
+      <TooltipPrimitive.Root {...props} open={open} onOpenChange={setOpen}>
+        {children}
+      </TooltipPrimitive.Root>
+    </TooltipContext.Provider>
+  )
+}
+
+const TooltipTrigger = React.forwardRef<
+  React.ElementRef<typeof TooltipPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Trigger>
+>(({ children, ...props }, ref) => {
+  const { isMobile, open, setOpen } = React.useContext(TooltipContext)
+
+  return (
+    <TooltipPrimitive.Trigger
+      ref={ref}
+      onMouseEnter={isMobile ? undefined : () => setOpen(true)}
+      onMouseLeave={isMobile ? undefined : () => setOpen(false)}
+      onClick={isMobile ? () => setOpen(!open) : undefined}
+      {...props}
+    >
+      {children}
+    </TooltipPrimitive.Trigger>
+  )
+})
+TooltipTrigger.displayName = TooltipPrimitive.Trigger.displayName
+
+const TooltipContent = React.forwardRef<
+  React.ElementRef<typeof TooltipPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
+> (({ className, children, sideOffset = 4, ...props }, ref) => (<TooltipPrimitive.Content
+
+    ref={ref}
+    sideOffset={sideOffset}
+    className={cn(
+      "z-50 overflow-hidden rounded-[8px] bg-[#002850] px-[16px] py-[8px] text-b2-regular text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <TooltipPrimitive.Arrow className="fill-[#002850]" />
+  </TooltipPrimitive.Content>
+))
+TooltipContent.displayName = TooltipPrimitive.Content.displayName
+
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
+

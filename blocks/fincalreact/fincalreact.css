@@ -1,0 +1,11 @@
+.fincalreact {
+  width: 100%;
+  min-height: 600px;
+}
+
+.fincalreact-root--retirement,
+.fincalreact-root--tax,
+.fincalreact-root--saving {
+  width: 100%;
+  min-height: 600px;
+}

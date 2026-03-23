@@ -1,0 +1,33 @@
+import { test, expect } from '@playwright/test';
+
+test('case-1', async ({ page }) => {
+  await page.goto('http://localhost:5173/');
+  await page.getByRole('heading', { name: 'วางแผนการเงินเพื่อชีวิตหลังเกษียณ' }).click();
+  await page.getByText('อยากมีเงินใช้หลังเกษียณ เดือนละ').click();
+  await page.getByRole('textbox', { name: '-999,999,999' }).click();
+  await page.getByRole('textbox', { name: '-999,999,999' }).fill('4,5000');
+  await page.getByRole('textbox', { name: '1-' }).nth(1).click();
+  await page.getByRole('textbox', { name: '1-' }).nth(1).fill('10');
+  await page.getByRole('textbox', { name: '1-' }).nth(2).click();
+  await page.getByRole('textbox', { name: '1-' }).nth(2).fill('70');
+  await page.getByRole('textbox', { name: '1-' }).nth(3).click();
+  await page.getByRole('textbox', { name: '1-' }).nth(3).fill('120');
+  await page.getByRole('button', { name: 'ต่อไป' }).click();
+  await page.getByText('ควรมีเงินสำหรับตอนเกษียณทั้งสิ้น').click();
+  await page.getByText('159,073,284 บาท').click();
+  await page.getByText('เพื่อมีเงินใช้หลังเกษียณเดือนละ').click();
+  await page.getByText('265,122 บาท').click();
+  await page.locator('div').filter({ hasText: /^เงินออมมีเงินออมไว้แล้ว$/ }).getByPlaceholder('0-').click();
+  await page.getByRole('textbox', { name: '0.1-' }).click();
+  await page.getByRole('textbox', { name: '0.1-' }).fill('100');
+  await page.getByRole('textbox', { name: '0-100' }).click();
+  await page.getByRole('textbox', { name: '0-100' }).fill('5');
+  await page.locator('div').filter({ hasText: /^เงินก้อน ณ วันเกษียณจำนวนเงินก้อนที่คาดว่าจะได้รับ ณ วันเกษียณ$/ }).getByPlaceholder('0-').click();
+  await page.getByRole('textbox', { name: '-999,999,999' }).nth(2).fill('2,000,0000');
+  await page.getByRole('textbox', { name: '-999,999,999' }).nth(3).click();
+  await page.getByRole('textbox', { name: '-999,999,999' }).nth(3).fill('9,7250');
+  await page.getByRole('textbox', { name: '-100' }).nth(2).click();
+  await page.getByRole('textbox', { name: '-100' }).nth(2).fill('5.3');
+  await page.getByRole('button', { name: 'คำนวณ' }).click();
+  await page.getByText('เยี่ยมเลย จากการคำนวณแล้ว คุณจะมีเงินเพียงพอสำหรับตอนเกษียณ').click();
+});

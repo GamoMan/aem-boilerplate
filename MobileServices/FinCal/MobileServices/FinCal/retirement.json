@@ -1,0 +1,158 @@
+{
+  "th": {
+    "common": {
+      "title": "วางแผนการเงินเพื่อชีวิตหลังเกษียณ",
+      "step1Label": "เป้าหมาย",
+      "step2Label": "เงินออมและเงินลงทุน",
+      "step3Label": "ผลการคำนวณ",
+      "unit": "บาท",
+      "step2Title": "กรอกข้อมูลเพิ่มอีกนิด\nเพื่อแผนเกษียณที่แม่นยำขึ้น",
+      "requiredAmount": "ควรมีเงินสำหรับตอนเกษียณทั้งสิ้น",
+      "forSpending": "เพื่อมีเงินใช้หลังเกษียณเดือนละ",
+      "noteText": "เป็นจำนวนเงินในอนาคตของเงินที่ต้องการใช้หลังเกษียณ หลังคำนวณเงินเฟ้อ {inflationRate}% ต่อปี และอัตราผลตอบแทนหลังเกษียณที่ {afterretirerate}% ต่อปีแล้ว",
+      "futureValueDisclaimer": ""
+    },
+    "buttons": {
+      "nextButton": "ต่อไป",
+      "backButton": "ย้อนกลับ",
+      "calculateButton": "คำนวณ",
+      "getRecommendation": "รับคำแนะนำ",
+      "getRecommendationLink": "https://www.bangkokbank.com",
+      "backToPlan": "ย้อนกลับ"
+    },
+    "notes": {
+      "disclaimer": "Disclaimer",
+      "disclaimerText": "<ul><li>Financial Calculator นี้ จัดทำขึ้นเพื่อให้ท่านตระหนักถึงการออมเงินและการลงทุนเพื่อเป้าหมายทางการเงินต่างๆ รวมถึงการวางแผนภาษีของท่าน มิได้เป็นการแนะนำผลิตภัณฑ์เงินฝาก สินเชื่อ การลงทุน การจัดการลงทุน หรือประกันชีวิตแต่อย่างใด และมิได้เป็นการเสนอขายหรือเชื้อเชิญท่านเพื่อให้ซื้อผลิตภัณฑ์หรือใช้บริการใดๆ ทั้งสิ้นของธนาคารกรุงเทพ ฉะนั้น ในกรณีที่ท่านประสงค์จะฝากเงิน ขอสินเชื่อ ลงทุน หรือซื้อประกันชีวิตอย่างหนึ่งอย่างใดโดยเฉพาะ โปรดขอรับข้อมูลเพื่อทำความเข้าใจในข้อมูลและรายละเอียดต่างๆ ก่อน</li><li>Financial Calculator นี้ เป็นเพียงเครื่องมือช่วยคำนวณเป้าหมายทางการเงินต่างๆ โดยสูตรการคำนวณ ยึดหลักการตามการวางแผนข้อมูลส่วนบุคคล ทั้งนี้ ข้อมูลหรือสูตรการคำนวณต่างๆ อาจจะไม่สมบูรณ์ เนื่องจากข้อจำกัดในการกรอกข้อมูล และการเปลี่ยนแปลงไปของเงื่อนไขที่กรมสรรพากรกำหนด ดังนั้น Financial Calculators นี้ ไม่อาจใช้เป็นหลักฐานในการนำมาอ้างอิงถึงความสำเร็จของเป้าหมายทางการเงินนั้นๆ</li><li>Financial Calculator นี้ ไม่อาจใช้เป็นหลักฐานหรือใช้ประกอบการทำธุรกรรมใดๆ กับธนาคารกรุงเทพได้ ธนาคารกรุงเทพไม่ได้รับรองความถูกต้อง ความครบถ้วน และความสมบูรณ์</li></ul>"
+    },
+    "validation": {
+      "percentageError": "ค่าต้องเป็นตัวเลขระหว่าง 0 ถึง 100",
+      "percentageSavingError": "ค่าต้องเป็นตัวเลขระหว่าง 0.1 ถึง 100",
+      "currentAgeRetirementAgeError": "อายุของคุณต้องน้อยกว่าอายุเกษียณ",
+      "retirementAgeLifeExpectancyError": "อายุเกษียณต้องน้อยกว่าหลังเกษียณต้องการใช้เงินจนถึงอายุ",
+      "minValueError": "ต่ำสุดได้ไม่เกิน",
+      "maxValueError": "สูงสุดได้ไม่เกิน",
+      "betweenValueError": "อยู่ระหว่าง {min} ถึง {max}",
+      "annualSavingsIncreaseRateError": "%การออมเพิ่มขึ้นปีละ ต้องน้อยกว่า/เท่ากับ ผลตอบแทนต่อปีที่คาดหวัง"
+    },
+    "steps": {
+      "step1": {
+        "monthlyIncomeTitle": "อยากมีเงินใช้หลังเกษียณ\nเดือนละ ",
+        "currentValueNote": "ณ มูลค่าเงินปัจจุบัน",
+        "currentAge": "ปัจจุบันคุณอายุ",
+        "retirementAge": "ต้องการเกษียณเมื่ออายุ",
+        "lifeExpectancy": "หลังเกษียณต้องการใช้เงินจนถึงอายุ"
+      },
+      "step2": {
+        "savingsSection": "เงินออม",
+        "currentSavingsLabel": "มีเงินออมไว้แล้ว",
+        "savingsExpectedReturnRateLabel": "อัตราผลตอบแทนต่อปีที่คาดหวัง (%)",
+        "annualSavingsIncreaseRateLabel": "ต้องการออมเงินเพิ่มขึ้นปีละ (%)",
+        "providentFundSection": "กองทุนสำรองเลี้ยงชีพ",
+        "currentProvidentFundSavingsLabel": "จำนวนเงินสะสมในกองทุนสำรองเลี้ยงชีพ ณ ปัจจุบัน",
+        "providentFundExpectedReturnRateLabel": "อัตราผลตอบแทนต่อปีที่คาดหวัง (%)",
+        "monthlySalaryLabel": "เงินเดือน ณ ปัจจุบัน",
+        "annualSalaryIncreaseRateLabel": "อัตราการขึ้นเงินเดือนต่อปี (%)",
+        "providentFundContributionRateLabel": "อัตราเงินสะสมที่จ่ายเข้ากองทุนสำรองเลี้ยงชีพ (%)",
+        "rmfSection": "กองทุน RMF",
+        "currentRMFSavingsLabel": "จำนวนเงินสะสมในกองทุน RMF ณ ปัจจุบัน",
+        "expectedAnnualRMFAccumulationLabel": "จำนวนเงินที่คาดว่าจะลงทุนในกองทุน RMF เพิ่มต่อปี",
+        "rmfExpectedReturnRateLabel": "อัตราผลตอบแทนต่อปีที่คาดหวัง (%)",
+        "lumpSumSection": "เงินก้อน ณ วันเกษียณ",
+        "lumpSumAtRetirementLabel": "จำนวนเงินก้อนที่คาดว่าจะได้รับ ณ วันเกษียณ",
+        "expectedAnnualInvestmentLabel": "จำนวนเงินที่คาดว่าจะนำไปลงทุนหรือสะสมต่อปี",
+        "lumpSumExpectedReturnRateLabel": "อัตราผลตอบแทนต่อปีที่คาดหวัง (%)"
+      },
+      "results": {
+        "resultsTitle": "สรุปผลการคำนวณ",
+        "resultsSubtitle": "",
+        "resultsGoalTitle": "ให้เงินออมของคุณงอกเงยยิ่งขึ้นด้วยแผนการลงทุน",
+        "resultsGoal": "เยี่ยมเลย จากการคำนวณแล้ว คุณจะมีเงินเพียงพอสำหรับตอนเกษียณ",
+        "recommendedMonthlySavingLabel": "จำนวนเงินออมต่อเดือน\nที่แนะนำ",
+        "alternativeMonthlySavingLabel": "หรือออมน้อยลง\nเพียงเดือนละ",
+        "byInvestingAt3Percent": "เมื่อได้รับอัตราผลตอบแทนเงินออมต่อปี {rate}%",
+        "byInvestingAt5Percent": "หากวางแผนให้ได้รับอัตราผลตอบแทนเป็น {rate}%",
+        "currentSavingsStatus": "เงินออมที่มีอยู่ ณ ปัจจุบัน",
+        "retirementGoal": "ควรมีเงินสำหรับตอนเกษียณทั้งสิ้น",
+        "recommendedMonthlySavingResult": "จำนวนเงินออมต่อเดือนที่แนะนำ",
+        "consistentInvestment": "คุณสามารถลดจำนวนเงินออมต่อเดือนลงได้หากลงทุนอย่างสม่ำเสมอ",
+        "investmentReturnRate": "โดยออมเงินเพิ่มขึ้นปีละ {rate}%"
+      }
+    }
+  },
+  "en": {
+    "common": {
+      "title": "Plan your finances for retirement",
+      "step1Label": "Your goal",
+      "step2Label": "Savings & investments",
+      "step3Label": "Result",
+      "unit": "baht",
+      "step2Title": "Give us more information\nfor a precise calculation",
+      "requiredAmount": "Total amount needed",
+      "forSpending": "Monthly amount available",
+      "noteText": "Including an inflation rate of {inflationRate}% p.a., the return on investment after retirement is assumed to be {afterretirerate}% p.a.",
+      "futureValueDisclaimer": ""
+    },
+    "buttons": {
+      "nextButton": "Next",
+      "backButton": "Back",
+      "calculateButton": "Calculate",
+      "getRecommendation": "Get recommendation",
+      "getRecommendationLink": "https://www.bangkokbank.com",
+      "backToPlan": "Back"
+    },
+    "validation": {
+      "percentageError": "Value must be a number between 0 and 100",
+      "percentageSavingError": "Value must be a number between 0.1 and 100",
+      "currentAgeRetirementAgeError": "Your current age must be less than your retirement age",
+      "retirementAgeLifeExpectancyError": "Your retirement age must be less than your life expectancy",
+      "minValueError": "Minimum must not exceed",
+      "maxValueError": "Maximum up to",
+      "betweenValueError": "Between {min} to {max}",
+      "annualSavingsIncreaseRateError": "% of annual increase in savings must be less than/equal to the expected annual return."
+    },
+    "steps": {
+      "step1": {
+        "monthlyIncomeTitle": "Monthly amount you want after retirement",
+        "currentValueNote": "At present value",
+        "currentAge": "How old are you?",
+        "retirementAge": "What age do you plan to retire?",
+        "lifeExpectancy": "Until what age do you expect to live?"
+      },
+      "step2": {
+        "savingsSection": "Savings",
+        "currentSavingsLabel": "Current savings balance",
+        "savingsExpectedReturnRateLabel": "Expected annual return (%)",
+        "annualSavingsIncreaseRateLabel": "Expected annual savings increase (%)",
+        "providentFundSection": "Provident fund",
+        "currentProvidentFundSavingsLabel": "Current balance in provident fund",
+        "providentFundExpectedReturnRateLabel": "Expected annual return (%)",
+        "monthlySalaryLabel": "Current salary",
+        "annualSalaryIncreaseRateLabel": "Estimated annual salary increase (%)",
+        "providentFundContributionRateLabel": "Monthly provident fund contribution (%)",
+        "rmfSection": "Retirement Mutual Fund (RMF)",
+        "currentRMFSavingsLabel": "Current balance in RMF",
+        "expectedAnnualRMFAccumulationLabel": "Expected annual RMF contribution",
+        "rmfExpectedReturnRateLabel": "Expected annual return (%)",
+        "lumpSumSection": "Lump sum at retirement",
+        "lumpSumAtRetirementLabel": "Expected lump sum at retirement",
+        "expectedAnnualInvestmentLabel": "Allocated lump sum for annual investing or savings",
+        "lumpSumExpectedReturnRateLabel": "Expected annual return (%)"
+      },
+      "results": {
+        "resultsTitle": "Calculation summary",
+        "resultsSubtitle": "If you know how to plan, you can reduce your monthly savings burden more than you think.",
+        "resultsGoalTitle": "Grow your money with smart investments",
+        "resultsGoal": "Awesome! After the calculation, you will have enough money for your retirement",
+        "recommendedMonthlySavingLabel": "Recommended\nmonthly savings",
+        "alternativeMonthlySavingLabel": "Or\nsave just",
+        "byInvestingAt3Percent": "Based on expected annual return on savings of {rate}%",
+        "byInvestingAt5Percent": "If you invest with an annual return of {rate}%",
+        "currentSavingsStatus": "Current savings amount",
+        "retirementGoal": "Total amount needed",
+        "recommendedMonthlySavingResult": "Recommended monthly savings",
+        "consistentInvestment": "You can save less each month by investing consistently",
+        "investmentReturnRate": "By increasing your annual savings by {rate}%"
+      }
+    }
+  }
+}

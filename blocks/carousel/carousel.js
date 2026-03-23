@@ -109,7 +109,7 @@ function buildCarousel(block) {
   function triggerContentAnimation(slide) {
     const title = slide.querySelector('.slide-title');
     const desc = slide.querySelector('.slide-desc');
-    
+
     title.classList.remove('title-visible');
     desc.classList.remove('desc-visible');
     if (title) {
@@ -142,9 +142,7 @@ function buildCarousel(block) {
       : 'transform 0.55s cubic-bezier(0.77, 0, 0.175, 1)';
     track.style.transform = `translateX(${offset}%)`;
 
-    slides.forEach((s, i) =>
-      s.setAttribute('aria-hidden', i !== current ? 'true' : 'false'),
-    );
+    slides.forEach((s, i) => s.setAttribute('aria-hidden', i !== current ? 'true' : 'false'));
 
     dots[prev]?.classList.remove('is-active');
     dots[current]?.classList.add('is-active');
@@ -205,8 +203,7 @@ function buildCarousel(block) {
     const dragPercent = (dragDelta / track.offsetWidth) * 100;
     const isAtStart = current === 0 && dragDelta > 0;
     const isAtEnd = current === slides.length - 1 && dragDelta < 0;
-    const drag =
-      isAtStart || isAtEnd ? dragPercent * 0.3 : dragPercent;
+    const drag = isAtStart || isAtEnd ? dragPercent * 0.3 : dragPercent;
 
     track.style.transform = `translateX(${baseOffset + drag}%)`;
 
@@ -227,8 +224,7 @@ function buildCarousel(block) {
     } else if (dragDelta > threshold) {
       goTo(current - 1);
     } else {
-      track.style.transition =
-        'transform 0.35s cubic-bezier(0.77, 0, 0.175, 1)';
+      track.style.transition = 'transform 0.35s cubic-bezier(0.77, 0, 0.175, 1)';
       track.style.transform = `translateX(${-current * 100}%)`;
     }
 
@@ -247,9 +243,7 @@ function buildCarousel(block) {
   track.addEventListener('touchend', onDragEnd);
 
   /* prevent image ghost-drag */
-  track.querySelectorAll('img').forEach((img) =>
-    img.setAttribute('draggable', 'false'),
-  );
+  track.querySelectorAll('img').forEach((img) => img.setAttribute('draggable', 'false'));
 
   /* ── keyboard ──────────────────────────────────────────────────── */
   block.setAttribute('tabindex', '0');
