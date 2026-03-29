@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => {
   // Always write to the same dist folder (no per-project subfolders). We keep
   // single-entry builds as self-contained bundles so deployments can pick
   // files for a specific project (assets are named by entry key).
-  const outDir = "../../../MobileServices/FincalReact/";
+  const outDir = "../../../MobileServices/Fincal/";
 
   // When building a single entry, disable code-splitting of dynamic imports so
   // the build emits one self-contained JS bundle for that page (no shared
@@ -45,7 +45,7 @@ export default defineConfig(({ mode }) => {
     assetFileNames: string | ((assetInfo: any) => string);
     entryFileNames: string | ((entryInfo: any) => string);
   } = isSingleProject
-    ? {
+      ? {
         // Prevent code-splitting for dynamic imports in single-entry builds
         inlineDynamicImports: true,
         // Prefix filenames with entry name so different projects don't overwrite
@@ -73,7 +73,7 @@ export default defineConfig(({ mode }) => {
           return `assets/${projectEnv}.js`;
         },
       }
-    : {
+      : {
         chunkFileNames: `assets/[name].js`,
         assetFileNames: `assets/[name].[ext]`,
         entryFileNames: `assets/[name].js`,
@@ -86,10 +86,10 @@ export default defineConfig(({ mode }) => {
     },
     base: base, // Dynamically set base path
     build: {
-  outDir,
-  // When building a single project sequentially into the same outDir,
-  // avoid emptying the directory so previous project assets are not deleted.
-  emptyOutDir: !isSingleProject,
+      outDir,
+      // When building a single project sequentially into the same outDir,
+      // avoid emptying the directory so previous project assets are not deleted.
+      emptyOutDir: !isSingleProject,
       sourcemap: mode === "development",
       chunkSizeWarningLimit: 1000,
       cssCodeSplit: true,
