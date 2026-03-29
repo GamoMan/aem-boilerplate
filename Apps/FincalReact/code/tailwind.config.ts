@@ -22,18 +22,18 @@ export default {
     },
     extend: {
       fontFamily: {
-        "bbl": ["BBL Sans", "system-ui", "sans-serif"],
-        "bbl-medium": ["BBL Sans Medium", "system-ui", "sans-serif"],
-        "bbl-bold": ["BBL Sans Bold", "system-ui", "sans-serif"],
+        "bbl": ["BangkokBank-Regular", "system-ui", "sans-serif"],
+        "bbl-medium": ["BangkokBank-Medium", "system-ui", "sans-serif"],
+        "bbl-bold": ["BangkokBank-Bold", "system-ui", "sans-serif"],
         "bbl-looped": [
-          "BBL Sans Looped",
-          "BBL Sans",
+          "BangkokBank_Text-Regular",
+          "BangkokBank-Regular",
           "system-ui",
           "sans-serif",
         ],
         "bbl-looped-medium": [
-          "BBL Sans Looped Medium",
-          "BBL Sans Medium",
+          "BangkokBank_Text-Regular Medium",
+          "BangkokBank-Medium",
           "system-ui",
           "sans-serif",
         ],
@@ -411,7 +411,7 @@ export default {
         },
         ".text-gray-90": {
           color: "#E3E3E5",
-        },       
+        },
         ".text-primary": {
           color: "#0064FF",
         },

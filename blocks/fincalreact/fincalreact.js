@@ -1,18 +1,18 @@
 const appConfig = {
   retirement: {
     rootClass: 'fincalreact-root--retirement',
-    script: '/apps/assets/retirement.js',
-    css: '/apps/assets/retirement.css',
+    script: '/MobileServices/FincalReact/assets/retirement.js',
+    css: '/MobileServices/FincalReact/assets/retirement.css',
   },
   tax: {
     rootClass: 'fincalreact-root--tax',
-    script: '/apps/assets/tax.js',
-    css: '/apps/assets/tax.css',
+    script: '/MobileServices/FincalReact/assets/tax.js',
+    css: '/MobileServices/FincalReact/assets/tax.css',
   },
   saving: {
     rootClass: 'fincalreact-root--saving',
-    script: '/apps/assets/saving.js',
-    css: '/apps/assets/saving.css',
+    script: '/MobileServices/FincalReact/assets/saving.js',
+    css: '/MobileServices/FincalReact/assets/saving.css',
   },
 };
 

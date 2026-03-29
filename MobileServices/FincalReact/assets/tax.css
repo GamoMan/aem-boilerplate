@@ -359,25 +359,25 @@ video {
 
 @font-face {
     font-family: BangkokBank-Regular;
-    src: local("BangkokBank-Regular"), url(/apps/fonts/BBLSans-Regular.woff) format("woff"), url(/apps/fonts/BBLSans-Regular.woff2) format("woff2");
+    src: local("BangkokBank-Regular"), url(../fonts/BBLSans-Regular.woff) format("woff"), url(../fonts/BBLSans-Regular.woff2) format("woff2");
     font-style: normal
 }
 
 @font-face {
     font-family: BangkokBank-Medium;
-    src: local("BangkokBank-Medium"), url(/apps/fonts/BBLSans-medium.woff) format("woff"), url(/apps/fonts/BBLSans-medium.woff2) format("woff2");
+    src: local("BangkokBank-Medium"), url(../fonts/BBLSans-medium.woff) format("woff"), url(../fonts/BBLSans-medium.woff2) format("woff2");
     font-style: normal
 }
 
 @font-face {
     font-family: BangkokBank-Bold;
-    src: local("BangkokBank-Bold"), url(/apps/fonts/BBLSans-bold.woff) format("woff"), url(/apps/fonts/BBLSans-bold.woff2) format("woff2");
+    src: local("BangkokBank-Bold"), url(../fonts/BBLSans-bold.woff) format("woff"), url(../fonts/BBLSans-bold.woff2) format("woff2");
     font-style: normal
 }
 
 @font-face {
     font-family: BangkokBank_Text-Regular;
-    src: local("BangkokBank_Text-Regular"), url(/apps/fonts/bblsans_looped-regular.woff) format("woff"), url(/apps/fonts/bblsans_looped-regular.woff2) format("woff2");
+    src: local("BangkokBank_Text-Regular"), url(../fonts/bblsans_looped-regular.woff) format("woff"), url(../fonts/bblsans_looped-regular.woff2) format("woff2");
     font-style: normal
 }
 

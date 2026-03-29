@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 @layer components {
-  .saving.hide-result-section{
+  .saving.hide-result-section {
     display: none;
   }
 
-  .saving.show-result-section{
+  .saving.show-result-section {
     display: block;
   }
-  
+
   .tax-saving-grid {
     display: grid;
   }
@@ -43,32 +43,32 @@ All colors MUST be HSL.
 
 @layer base {
   @font-face {
-    font-family: "BBL Sans";
-    src: local("BBL Sans"),
+    font-family: "BangkokBank-Regular";
+    src: local("BangkokBank-Regular"),
       url("/fonts/BBLSans-Regular.woff") format("woff"),
       url("/fonts/BBLSans-Regular.woff2") format("woff2");
     font-style: normal;
   }
 
   @font-face {
-    font-family: "BBL Sans Medium";
-    src: local("BBL Sans Medium"),
+    font-family: "BangkokBank-Medium";
+    src: local("BangkokBank-Medium"),
       url("/fonts/BBLSans-medium.woff") format("woff"),
       url("/fonts/BBLSans-medium.woff2") format("woff2");
     font-style: normal;
   }
 
   @font-face {
-    font-family: "BBL Sans Bold";
-    src: local("BBL Sans Bold"),
+    font-family: "BangkokBank-Bold";
+    src: local("BangkokBank-Bold"),
       url("/fonts/BBLSans-bold.woff") format("woff"),
       url("/fonts/BBLSans-bold.woff2") format("woff2");
     font-style: normal;
   }
 
   @font-face {
-    font-family: "BBL Sans Looped";
-    src: local("BBL Sans Looped"),
+    font-family: "BangkokBank_Text-Regular";
+    src: local("BangkokBank_Text-Regular"),
       url("/fonts/bblsans_looped-regular.woff") format("woff"),
       url("/fonts/bblsans_looped-regular.woff2") format("woff2");
     font-style: normal;
@@ -206,14 +206,14 @@ All colors MUST be HSL.
 }
 
 .disabled\:opacity-50:disabled {
-    opacity: 1!important;
-    color: #939399!important;
-    background: transparent;
-    border: 2px solid #e3e3e5!important;
+  opacity: 1 !important;
+  color: #939399 !important;
+  background: transparent;
+  border: 2px solid #e3e3e5 !important;
 }
 
 .bg-primary.disabled\:opacity-50:disabled {
-    opacity: 1!important;
-    background: #e3e3e5!important;
-    border: 2px solid #e3e3e5!important;
+  opacity: 1 !important;
+  background: #e3e3e5 !important;
+  border: 2px solid #e3e3e5 !important;
 }

@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => {
   // Always write to the same dist folder (no per-project subfolders). We keep
   // single-entry builds as self-contained bundles so deployments can pick
   // files for a specific project (assets are named by entry key).
-  const outDir = "dist/MobileServices/Fincal/";
+  const outDir = "../../../MobileServices/FincalReact/";
 
   // When building a single entry, disable code-splitting of dynamic imports so
   // the build emits one self-contained JS bundle for that page (no shared
