@@ -1,4 +1,3 @@
-// add delayed functionality here
 function decorateButtonsV1(element) {
     element.querySelectorAll('a').forEach((a) => {
         a.title = a.title || a.textContent;
