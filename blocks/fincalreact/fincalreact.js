@@ -60,7 +60,12 @@ export default async function decorate(block) {
   root.className = 'fincalreact-root ' + config.rootClass;
   shadow.appendChild(root);
 
-  // Load CSS into shadow root
+  // Load Tokens and CSS into shadow root
+  const tokensLink = document.createElement('link');
+  tokensLink.rel = 'stylesheet';
+  tokensLink.href = '/styles/tokens.css';
+  shadow.appendChild(tokensLink);
+
   if (config.css) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
