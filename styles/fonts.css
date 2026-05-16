@@ -1,6 +1,6 @@
 /* stylelint-disable max-line-length */
 
-/* Bangkok Bank Custom Fonts - BangkokBank-Regular Family */
+/* Bangkok Bank Custom Fonts - BBL Sans Family */
 
 @font-face {
   font-family: BangkokBank-Black;
@@ -82,7 +82,7 @@
   font-display: swap;
 }
 
-/* Legacy Muli font aliases (mapped to BangkokBank-Regular) */
+/* Legacy Muli font aliases (mapped to BBL Sans) */
 @font-face {
   font-family: Muli-Regular;
   src: url("../fonts/BBLSans-regular.eot");

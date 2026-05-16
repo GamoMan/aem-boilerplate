@@ -1,8 +1,8 @@
 import {
-  buildBlock,
   loadHeader,
   loadFooter,
   decorateIcons,
+  decorateButtons,
   decorateSections,
   decorateBlocks,
   decorateTemplateAndTheme,
@@ -16,8 +16,12 @@ import {
 import {
   decorateSvgWithAltText,
   decorateTerritoryButtons,
+  decorateButtonsV1,
+  loadBreadcrumb,
+  buildCookieAlert,
 } from './bbl-decorators.js';
 
+import decorateTabs from '../blocks/tabs/tabs-helper.js';
 
 /**
  * Gets the language from the HTML tag.
@@ -74,34 +78,6 @@ export function createElementFromHTML(html, doc) {
 }
 
 /**
- * Check if a URL is external (different domain from current site)
- * @param {string} url - The URL to check
- * @returns {boolean} True if URL is external
- */
-export function isExternalUrl(url) {
-  try {
-    const urlObj = new URL(url, window.location.href);
-    return urlObj.hostname !== window.location.hostname;
-  } catch {
-    return false;
-  }
-}
-
-/**
- * Set target="_blank" on external links in a container
- * @param {Element} container - The container element to process
- */
-export function setExternalLinksTarget(container) {
-  const links = container.querySelectorAll('a[href]');
-  links.forEach((link) => {
-    if (isExternalUrl(link.href)) {
-      link.setAttribute('target', '_blank');
-      link.setAttribute('rel', 'noopener noreferrer');
-    }
-  });
-}
-
-/**
  * load fonts.css and set a session storage flag
  */
 async function loadFonts() {
@@ -114,93 +90,16 @@ async function loadFonts() {
 }
 
 /**
- * Builds hero block and prepends to main in a new section.
- * @param {Element} main The container element
- */
-function buildHeroBlock(main) {
-  const h1 = main.querySelector('h1');
-  const picture = main.querySelector('picture');
-  // eslint-disable-next-line no-bitwise
-  if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
-    // Check if h1 or picture is already inside a hero block
-    if (h1.closest('.hero') || picture.closest('.hero')) {
-      return; // Don't create a duplicate hero block
-    }
-    const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: [picture, h1] }));
-    main.prepend(section);
-  }
-}
-
-
-/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
 function buildAutoBlocks(main) {
   try {
-    // auto load `*/fragments/*` references
-    const fragments = [...main.querySelectorAll('a[href*="/fragments/"]')].filter((f) => !f.closest('.fragment'));
-    if (fragments.length > 0) {
-      // eslint-disable-next-line import/no-cycle
-      import('../blocks/fragment/fragment.js').then(({ loadFragment }) => {
-        fragments.forEach(async (fragment) => {
-          try {
-            const { pathname } = new URL(fragment.href);
-            const frag = await loadFragment(pathname);
-            fragment.parentElement.replaceWith(...frag.children);
-          } catch (error) {
-            // eslint-disable-next-line no-console
-            console.error('Fragment loading failed', error);
-          }
-        });
-      });
-    }
-
-    buildHeroBlock(main);
+    decorateTabs(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
   }
-}
-
-/**
- * Decorates formatted links to style them as buttons.
- * @param {HTMLElement} main The main container element
- */
-function decorateButtons(main) {
-  main.querySelectorAll('p a[href]').forEach((a) => {
-    a.title = a.title || a.textContent;
-    const p = a.closest('p');
-    const text = a.textContent.trim();
-
-    // quick structural checks
-    if (a.querySelector('img') || p.textContent.trim() !== text) return;
-
-    // skip URL display links
-    try {
-      if (new URL(a.href).href === new URL(text, window.location).href) return;
-    } catch { /* continue */ }
-
-    // require authored formatting for buttonization
-    const strong = a.closest('strong');
-    const em = a.closest('em');
-    if (!strong && !em) return;
-
-    p.className = 'button-wrapper';
-    a.className = 'button';
-    if (strong && em) { // high-impact call-to-action
-      a.classList.add('accent');
-      const outer = strong.contains(em) ? strong : em;
-      outer.replaceWith(a);
-    } else if (strong) {
-      a.classList.add('primary');
-      strong.replaceWith(a);
-    } else {
-      a.classList.add('secondary');
-      em.replaceWith(a);
-    }
-  });
 }
 
 /**
@@ -209,6 +108,7 @@ function decorateButtons(main) {
  */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
+  // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateIcons(main);
   buildAutoBlocks(main);
@@ -216,7 +116,6 @@ export function decorateMain(main) {
   decorateBlocks(main);
   decorateTerritoryButtons(main);
   decorateSvgWithAltText(main);
-  setExternalLinksTarget(main);
 
   const pageVariant = getMetadata('pagevariant');
   if (pageVariant) {
@@ -241,7 +140,7 @@ function getDocumentLangFromPath(pathname) {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
-  document.documentElement.lang = 'en';
+  document.documentElement.lang = getDocumentLangFromPath(window.location.pathname);
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
@@ -252,7 +151,7 @@ async function loadEager(doc) {
 
   try {
     /* if desktop (proxy for fast connection) or fonts already loaded, load fonts.css */
-    if (window.innerWidth >= 900 || sessionStorage.getItem('fonts-loaded')) {
+    if (window.innerWidth >= 1025 || sessionStorage.getItem('fonts-loaded')) {
       loadFonts();
     }
   } catch (e) {
@@ -265,19 +164,31 @@ async function loadEager(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
-  loadHeader(doc.querySelector('header'));
-
   const main = doc.querySelector('main');
   await loadSections(main);
+
+  await buildCookieAlert(main);
+
+  // Decorate buttons again after all sections are loaded (for dynamically loaded content like tabs)
+  decorateButtonsV1(main);
+  decorateSvgWithAltText(main);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
+  loadHeader(doc.querySelector('header'));
   loadFooter(doc.querySelector('footer'));
 
+  await loadBreadcrumb(doc);
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+
+  // Add link click handler for URL validation
+  setTimeout(() => {
+    document.dispatchEvent(new Event('lazy-phase'));
+    Window.LAZY_PHASE = true;
+  }, 150);
 }
 
 /**

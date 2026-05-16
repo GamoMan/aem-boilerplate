@@ -1,0 +1,17 @@
+{
+  "skill_name": "bbl-design-system",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Create a new block called 'product-card' that displays a product title, description, and a 'Learn More' button. Use the BBL design system tokens for all styling, ensuring the title uses H4-medium and the button is L size. Provide the CSS and JS for this block, mobile-first.",
+      "expected_output": "CSS and JS files using BBL tokens (e.g., --font-heading-small, --rounded-md, --color-primary-active).",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Apply BBL typography to a hero section. The main title should be D1-medium and the sub-header H3-medium. Ensure the line-heights are correct for both English and Thai scripts as per the BBL design system.",
+      "expected_output": "CSS that correctly applies rem and em values for D1 and H3 for both mobile and desktop views.",
+      "files": []
+    }
+  ]
+}

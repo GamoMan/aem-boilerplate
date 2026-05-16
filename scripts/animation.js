@@ -25,11 +25,11 @@ const DEFAULT_EASING = 'ease';
  * @returns {{ duration: number, easing: string, onComplete: function|undefined }}
  */
 function normalizeOptions(options = {}) {
-    return {
-        duration: options.duration ?? DEFAULT_DURATION,
-        easing: options.easing ?? DEFAULT_EASING,
-        onComplete: options.onComplete,
-    };
+  return {
+    duration: options.duration ?? DEFAULT_DURATION,
+    easing: options.easing ?? DEFAULT_EASING,
+    onComplete: options.onComplete,
+  };
 }
 
 /**
@@ -40,29 +40,29 @@ function normalizeOptions(options = {}) {
  * @returns {Animation}
  */
 export function slideDown(element, options = {}) {
-    const { duration, easing, onComplete } = normalizeOptions(options);
-    const prevOverflow = element.style.overflow;
-    const prevMaxHeight = element.style.maxHeight;
-    element.style.overflow = 'hidden';
-    element.style.maxHeight = 'none';
-    const endHeight = element.scrollHeight;
-    element.style.maxHeight = '0';
-    const animation = element.animate(
-        [
-            { maxHeight: '0px' },
-            { maxHeight: `${endHeight}px` },
-        ],
-        { duration, easing, fill: 'forwards' },
-    );
-    animation.finished.then(() => {
-        animation.cancel();
-        element.style.maxHeight = prevMaxHeight || '';
-        element.style.overflow = prevOverflow || '';
-    });
-    if (typeof onComplete === 'function') {
-        animation.finished.then(onComplete);
-    }
-    return animation;
+  const { duration, easing, onComplete } = normalizeOptions(options);
+  const prevOverflow = element.style.overflow;
+  const prevMaxHeight = element.style.maxHeight;
+  element.style.overflow = 'hidden';
+  element.style.maxHeight = 'none';
+  const endHeight = element.scrollHeight;
+  element.style.maxHeight = '0';
+  const animation = element.animate(
+    [
+      { maxHeight: '0px' },
+      { maxHeight: `${endHeight}px` },
+    ],
+    { duration, easing, fill: 'forwards' },
+  );
+  animation.finished.then(() => {
+    animation.cancel();
+    element.style.maxHeight = prevMaxHeight || '';
+    element.style.overflow = prevOverflow || '';
+  });
+  if (typeof onComplete === 'function') {
+    animation.finished.then(onComplete);
+  }
+  return animation;
 }
 
 /**
@@ -72,27 +72,27 @@ export function slideDown(element, options = {}) {
  * @returns {Animation}
  */
 export function slideUp(element, options = {}) {
-    const { duration, easing, onComplete } = normalizeOptions(options);
-    const prevOverflow = element.style.overflow;
-    const prevMaxHeight = element.style.maxHeight;
-    element.style.overflow = 'hidden';
-    const startHeight = element.scrollHeight;
-    const animation = element.animate(
-        [
-            { maxHeight: `${startHeight}px` },
-            { maxHeight: '0px' },
-        ],
-        { duration, easing, fill: 'forwards' },
-    );
-    animation.finished.then(() => {
-        animation.cancel();
-        element.style.maxHeight = prevMaxHeight || '';
-        element.style.overflow = prevOverflow || '';
-    });
-    if (typeof onComplete === 'function') {
-        animation.finished.then(onComplete);
-    }
-    return animation;
+  const { duration, easing, onComplete } = normalizeOptions(options);
+  const prevOverflow = element.style.overflow;
+  const prevMaxHeight = element.style.maxHeight;
+  element.style.overflow = 'hidden';
+  const startHeight = element.scrollHeight;
+  const animation = element.animate(
+    [
+      { maxHeight: `${startHeight}px` },
+      { maxHeight: '0px' },
+    ],
+    { duration, easing, fill: 'forwards' },
+  );
+  animation.finished.then(() => {
+    animation.cancel();
+    element.style.maxHeight = prevMaxHeight || '';
+    element.style.overflow = prevOverflow || '';
+  });
+  if (typeof onComplete === 'function') {
+    animation.finished.then(onComplete);
+  }
+  return animation;
 }
 
 /**
@@ -102,27 +102,27 @@ export function slideUp(element, options = {}) {
  * @returns {Animation}
  */
 export function slideLeft(element, options = {}) {
-    const { duration, easing, onComplete } = normalizeOptions(options);
-    const prevOverflow = element.style.overflow;
-    const prevMaxWidth = element.style.maxWidth;
-    element.style.overflow = 'hidden';
-    const startWidth = element.scrollWidth;
-    const animation = element.animate(
-        [
-            { maxWidth: `${startWidth}px` },
-            { maxWidth: '0px' },
-        ],
-        { duration, easing, fill: 'forwards' },
-    );
-    animation.finished.then(() => {
-        animation.cancel();
-        element.style.maxWidth = prevMaxWidth || '';
-        element.style.overflow = prevOverflow || '';
-    });
-    if (typeof onComplete === 'function') {
-        animation.finished.then(onComplete);
-    }
-    return animation;
+  const { duration, easing, onComplete } = normalizeOptions(options);
+  const prevOverflow = element.style.overflow;
+  const prevMaxWidth = element.style.maxWidth;
+  element.style.overflow = 'hidden';
+  const startWidth = element.scrollWidth;
+  const animation = element.animate(
+    [
+      { maxWidth: `${startWidth}px` },
+      { maxWidth: '0px' },
+    ],
+    { duration, easing, fill: 'forwards' },
+  );
+  animation.finished.then(() => {
+    animation.cancel();
+    element.style.maxWidth = prevMaxWidth || '';
+    element.style.overflow = prevOverflow || '';
+  });
+  if (typeof onComplete === 'function') {
+    animation.finished.then(onComplete);
+  }
+  return animation;
 }
 
 /**
@@ -132,27 +132,27 @@ export function slideLeft(element, options = {}) {
  * @returns {Animation}
  */
 export function slideRight(element, options = {}) {
-    const { duration, easing, onComplete } = normalizeOptions(options);
-    const prevOverflow = element.style.overflow;
-    const prevMaxWidth = element.style.maxWidth;
-    element.style.overflow = 'hidden';
-    element.style.maxWidth = 'none';
-    const endWidth = element.scrollWidth;
-    element.style.maxWidth = '0';
-    const animation = element.animate(
-        [
-            { maxWidth: '0px' },
-            { maxWidth: `${endWidth}px` },
-        ],
-        { duration, easing, fill: 'forwards' },
-    );
-    animation.finished.then(() => {
-        animation.cancel();
-        element.style.maxWidth = prevMaxWidth || '';
-        element.style.overflow = prevOverflow || '';
-    });
-    if (typeof onComplete === 'function') {
-        animation.finished.then(onComplete);
-    }
-    return animation;
+  const { duration, easing, onComplete } = normalizeOptions(options);
+  const prevOverflow = element.style.overflow;
+  const prevMaxWidth = element.style.maxWidth;
+  element.style.overflow = 'hidden';
+  element.style.maxWidth = 'none';
+  const endWidth = element.scrollWidth;
+  element.style.maxWidth = '0';
+  const animation = element.animate(
+    [
+      { maxWidth: '0px' },
+      { maxWidth: `${endWidth}px` },
+    ],
+    { duration, easing, fill: 'forwards' },
+  );
+  animation.finished.then(() => {
+    animation.cancel();
+    element.style.maxWidth = prevMaxWidth || '';
+    element.style.overflow = prevOverflow || '';
+  });
+  if (typeof onComplete === 'function') {
+    animation.finished.then(onComplete);
+  }
+  return animation;
 }

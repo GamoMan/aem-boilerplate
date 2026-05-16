@@ -1,0 +1,52 @@
+{
+  "eval_id": 0,
+  "eval_name": "Product Card Block Implementation",
+  "prompt": "Create a new block called 'product-card' that displays a product title, description, and a 'Learn More' button. Use the BBL design system tokens for all styling, ensuring the title uses H4-medium and the button is L size. Provide the CSS and JS for this block, mobile-first.",
+  "assertions": [
+    {
+      "text": "product-card.js is created and exports a default decorate function.",
+      "level": "critical",
+      "type": "file_contents",
+      "parameters": {
+        "file_path": "product-card.js",
+        "regex": "export default async function decorate\\(block\\)"
+      }
+    },
+    {
+      "text": "product-card.css is created and applies H4-medium typography to the title.",
+      "level": "critical",
+      "type": "file_contents",
+      "parameters": {
+        "file_path": "product-card.css",
+        "regex": "\\.product-card h2\\s*\\{[^}]*font-size:\\s*1\\.3rem;[^}]*line-height:\\s*1\\.35em;"
+      }
+    },
+    {
+      "text": "product-card.css applies L size button styling with correct height and border-radius.",
+      "level": "critical",
+      "type": "file_contents",
+      "parameters": {
+        "file_path": "product-card.css",
+        "regex": "\\.product-card .button\\s*\\{[^}]*height:\\s*52px;[^}]*border-radius:\\s*var\\(--rounded-md\\);"
+      }
+    },
+    {
+      "text": "The CSS uses BBL design tokens for colors (e.g., --color-primary-active) and spacing.",
+      "level": "critical",
+      "type": "file_contents",
+      "parameters": {
+        "file_path": "product-card.css",
+        "regex": "var\\(--color-primary-active\\)|var\\(--space-\\d+\\)|var\\(--rounded-md\\)"
+      }
+    },
+    {
+      "text": "The block CSS selectors are scoped to `\\.product-card`.",
+      "level": "critical",
+      "type": "file_contents",
+      "parameters": {
+        "file_path": "product-card.css",
+        "regex": "\\.product-card\\s+\\\\"
+      }
+    }
+  ]
+}

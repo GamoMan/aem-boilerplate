@@ -19,7 +19,9 @@ import {
  * @returns {HTMLElement} The root element of the fragment
  */
 export async function loadFragment(path) {
-  if (path && path.startsWith('/') && !path.startsWith('//')) {
+  if (path && path.startsWith('/')) {
+    // eslint-disable-next-line no-param-reassign
+    path = path.replace(/(\.plain)?\.html/, '');
     const resp = await fetch(`${path}.plain.html`);
     if (resp.ok) {
       const main = document.createElement('main');
@@ -42,9 +44,39 @@ export async function loadFragment(path) {
   return null;
 }
 
+/**
+ * Event listener for 'bbl:load-fragment' custom events.
+ * Allows other modules to load fragments without creating cyclic dependencies.
+ * @listens bbl:load-fragment
+ */
+document.addEventListener('bbl:load-fragment', async (e) => {
+  const { path, callback } = e.detail;
+  if (!path) return;
+
+  try {
+    const fragment = await loadFragment(path);
+    if (fragment) {
+      document.body.appendChild(fragment);
+    }
+    if (typeof callback === 'function') {
+      callback(fragment);
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`Failed to load fragment from event: ${path}`, error);
+  }
+});
+
 export default async function decorate(block) {
   const link = block.querySelector('a');
   const path = link ? link.getAttribute('href') : block.textContent.trim();
   const fragment = await loadFragment(path);
-  if (fragment) block.replaceChildren(...fragment.childNodes);
+  if (fragment) {
+    const fragmentSection = fragment.querySelector(':scope .section');
+    if (fragmentSection) {
+      block.classList.add(...fragmentSection.classList);
+      block.classList.remove('section');
+      block.replaceChildren(...fragmentSection.childNodes);
+    }
+  }
 }

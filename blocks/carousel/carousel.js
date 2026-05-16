@@ -119,6 +119,7 @@ function buildCarousel(block) {
     }
     if (desc) {
       desc.classList.remove('desc-visible');
+      // eslint-disable-next-line no-unused-expressions
       void desc.offsetWidth; // reflow
       setTimeout(() => desc.classList.add('desc-visible'), 0);
     }

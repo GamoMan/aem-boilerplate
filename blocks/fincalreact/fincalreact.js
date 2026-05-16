@@ -49,7 +49,24 @@ async function loadAppAssets({ script, css }) {
 }
 
 export default async function decorate(block) {
-  const type = (block.dataset.project || block.textContent.trim() || 'retirement').trim().toLowerCase();
+  // 1. วิธีดึงค่าด่วน: ตรวจสอบจาก classList ของ block 
+  // (ปกติ AEM จะเอาชื่อตารางด้านล่างมาใส่เป็น class ให้ที่ตัว block container เสมอ เช่น class="retirement block")
+  let type = 'tax'; // default
+  
+  if (block.classList.contains('retirement')) {
+    type = 'retirement';
+  } else if (block.classList.contains('tax')) {
+    type = 'tax';
+  } else if (block.classList.contains('saving')) {
+    type = 'saving';
+  } else {
+    // 2. วิธีสำรอง: ดึงจาก library-metadata table ถ้ามี
+    const metaRow = Array.from(block.querySelectorAll('div')).find(el => el.textContent.trim().toLowerCase() === 'name');
+    if (metaRow && metaRow.nextElementSibling) {
+      type = metaRow.nextElementSibling.textContent.trim().toLowerCase();
+    }
+  }
+
   const config = appConfig[type] || appConfig.retirement;
 
   block.classList.add('fincalreact');
@@ -58,6 +75,8 @@ export default async function decorate(block) {
   const shadow = block.attachShadow({ mode: 'open' });
   const root = document.createElement('div');
   root.className = 'fincalreact-root ' + config.rootClass;
+  // แนะนำให้ใส่ id หรือสร้างจุดยึดที่ชัดเจนให้ React มารู้จัก
+  root.id = 'fincalreact-app-root'; 
   shadow.appendChild(root);
 
   // Load Tokens and CSS into shadow root
@@ -73,8 +92,9 @@ export default async function decorate(block) {
     shadow.appendChild(link);
   }
 
-  // Set global reference for React mounting
+  // Set global reference ให้ React App สามารถวิ่งเข้ามาเกาะที่ div นี้ใน Shadow DOM ได้
   window.fincalShadow = shadow;
+  window.fincalRootElement = root;
 
   try {
     // Load JS globally

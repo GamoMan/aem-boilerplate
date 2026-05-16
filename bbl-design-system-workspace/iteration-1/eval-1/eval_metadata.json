@@ -1,0 +1,52 @@
+{
+  "eval_id": 1,
+  "eval_name": "Hero Section Typography",
+  "prompt": "Apply BBL typography to a hero section. The main title should be D1-medium and the sub-header H3-medium. Ensure the line-heights are correct for both English and Thai scripts as per the BBL design system.",
+  "assertions": [
+    {
+      "text": "hero.css is created and applies D1-medium typography to the main title for mobile.",
+      "level": "critical",
+      "type": "file_contents",
+      "parameters": {
+        "file_path": "hero.css",
+        "regex": "\\.hero-title\\s*\\{[^}]*font-size:\\s*3\\.3rem;[^}]*line-height:\\s*1\\.15em;"
+      }
+    },
+    {
+      "text": "hero.css applies D1-medium typography to the main title for desktop.",
+      "level": "critical",
+      "type": "file_contents",
+      "parameters": {
+        "file_path": "hero.css",
+        "regex": "@media \\(min-width: 900px\\)\\s*\\{[^}]*\\.hero-title\\s*\\{[^}]*font-size:\\s*5\\.6rem;[^}]*line-height:\\s*1\\.15em;"
+      }
+    },
+    {
+      "text": "hero.css applies H3-medium typography to the sub-header for mobile.",
+      "level": "critical",
+      "type": "file_contents",
+      "parameters": {
+        "file_path": "hero.css",
+        "regex": "\\.hero-sub-header\\s*\\{[^}]*font-size:\\s*1\\.6rem;[^}]*line-height:\\s*1\\.35em;"
+      }
+    },
+    {
+      "text": "hero.css applies H3-medium typography to the sub-header for desktop.",
+      "level": "critical",
+      "type": "file_contents",
+      "parameters": {
+        "file_path": "hero.css",
+        "regex": "@media \\(min-width: 900px\\)\\s*\\{[^}]*\\.hero-sub-header\\s*\\{[^}]*font-size:\\s*3rem;[^}]*line-height:\\s*1\\.15em;"
+      }
+    },
+    {
+      "text": "hero.css includes both English and Thai line-heights where applicable (e.g., using a custom property or direct value for each script if needed).",
+      "level": "critical",
+      "type": "file_contents",
+      "parameters": {
+        "file_path": "hero.css",
+        "regex": "line-height:\\s*(1\\.15em|1\\.25em|1\\.35em|var\\(--line-height-th\\));"
+      }
+    }
+  ]
+}
