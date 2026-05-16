@@ -49,9 +49,26 @@ async function loadAppAssets({ script, css }) {
 }
 
 export default async function decorate(block) {
+  // สร้างฟังก์ชันภายในเพื่อหาค่าจากตารางใน Block
+  const getBlockMetadata = () => {
+    // หา div ทั้งหมดใน block
+    const divs = Array.from(block.querySelectorAll(':scope > div'));
+    
+    for (const div of divs) {
+      const children = div.children;
+      // ตรวจสอบว่าในแถวนั้นมี 2 คอลัมน์หรือไม่ (Key และ Value)
+      if (children.length >= 2) {
+        const key = children[0].textContent.trim().toLowerCase();
+        const value = children[1].textContent.trim();  
+        return value;
+      }
+    }
+    return null;
+  };
+  const type = getBlockMetadata();
   // 1. วิธีดึงค่าด่วน: ตรวจสอบจาก classList ของ block 
   // (ปกติ AEM จะเอาชื่อตารางด้านล่างมาใส่เป็น class ให้ที่ตัว block container เสมอ เช่น class="retirement block")
-  let type = 'tax'; // default
+  // let type = 'tax'; // default
   
   if (block.classList.contains('retirement')) {
     type = 'retirement';
