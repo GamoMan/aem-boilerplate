@@ -46,7 +46,7 @@ const SavingToolsResultBox: React.FC<SavingToolsResultBoxProps> = ({
   const effectiveWhiteNumberColor = variant != 'blue' ? 'text-gray-50' : baseNumberColor;
   const effectiveUnitColor = isInitialState ? 'text-gray-50' : baseUnitColor;
   const effectiveNoteColor = isInitialState ? 'text-gray-50' : baseNoteColor;
-  ''
+
   const notetext = (formData.annualSavingIncreaseRate !== 0 ? '' + texts.common.noteincreasedSavingMonthly : '') + texts.common.noteText +  texts.common.noterecommendSavingMonthly;
 
   return (

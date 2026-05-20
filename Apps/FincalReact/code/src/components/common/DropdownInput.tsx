@@ -50,13 +50,18 @@ export const DropdownInput: React.FC<DropdownInputProps> = ({
   language,
   className,
 }) => {
+  const portalContainer = typeof window !== 'undefined' ? window.fincalShadow : undefined;
+
   return (
     <div className={`relative ${className}`}>
       <Select value={value} onValueChange={onChange}>
         <CustomSelectTrigger className="w-full h-[56px] border-[1px] border-solid rounded-lg border-[#C8C8CC] px-4 text-left font-b1-regular font-bbl data-[placeholder]:text-[#78787D]">
           <SelectValue placeholder={label} />
         </CustomSelectTrigger>
-        <SelectContent className="rounded-lg border-[#C8C8CC] w-[var(--radix-select-trigger-width)] bg-white">
+        <SelectContent
+          className="rounded-lg border-[#C8C8CC] w-[var(--radix-select-trigger-width)] bg-white"
+          portalContainer={portalContainer}
+        >
           {options.map((option) => (
             <SelectItem key={option.value} value={option.value} className="font-b1-regular font-bbl">
               {option.label}

@@ -117,6 +117,325 @@ Pages are progressively loaded in three phases to maximize performance. This pro
 * Lazy - load all other page content, including the header and footer.
 * Delayed - load things that can be safely loaded later here and incur a performance penalty when loaded earlier
 
+## Universal Editor (AEM Cloud) Block Development
+
+Universal Editor (UE) enables visual WYSIWYG authoring for AEM Edge Delivery Services sites. To support visual authoring, blocks must define their content models and editor definitions in JSON configuration fragments.
+
+### Block Structure with Universal Editor
+
+Each editable block contains three core files in its block folder:
+```
+/blocks/{blockname}/
+  ├── _{blockname}.json   # Universal Editor config (Definition, Model, Filters)
+  ├── {blockname}.js      # Block decoration logic
+  └── {blockname}.css     # Block-specific styles
+```
+
+### 1. Block JSON (`_{blockname}.json`)
+The block's JSON fragment registers the block in the Universal Editor palette and maps fields to JCR properties, which are then rendered into semantic Edge Delivery HTML. It consists of three arrays:
+
+- **`definitions`**: Registers the block in the editor. Set `resourceType` to `core/franklin/components/block/v1/block` and map the `template` fields matching the model fields to provide default values.
+- **`models`**: Defines the authoring fields (e.g. `reference`, `text`, `richtext`, `aem-content`).
+- **`filters`**: Left empty for regular blocks. To allow authors to insert your block into sections, add your block ID (e.g., `"teaser"`) to the section filters list in `/models/_section.json`.
+
+#### Content Modeling Techniques
+To simplify the block's JavaScript decoration and CSS styling, use these content modeling concepts:
+- **Field Collapse**: Groups related properties together to output cleaner HTML. For instance, collapse `image` and `imageAlt` fields to create a single `<img>` element where the `alt` attribute is mapped to `imageAlt`.
+- **Element Grouping**: Uses a prefix (e.g., `textContent_`) to group fields. The Universal Editor will output all fields with the same prefix inside a single wrapper `<div>`, separating the block's logical columns or areas.
+- **Type Inference**: AEM automatically maps specific field pairs (such as `aem-content` and `text` grouped for a CTA) to semantic elements like `<a>` tags.
+
+#### Example Block JSON (`/blocks/teaser/_teaser.json`)
+```json
+{
+  "definitions": [
+    {
+      "title": "Teaser",
+      "id": "teaser",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Teaser",
+              "model": "teaser",
+              "textContent_text": "<h2>Enter a title</h2><p>...and body text here!</p>",
+              "textContent_cta": "/",
+              "textContent_ctaText": "Click me!"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "teaser",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Image alt text",
+          "required": true
+        },
+        {
+          "component": "richtext",
+          "name": "textContent_text",
+          "label": "Text",
+          "valueType": "string",
+          "required": true
+        },
+        {
+          "component": "aem-content",
+          "name": "textContent_cta",
+          "label": "CTA",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "textContent_ctaText",
+          "label": "CTA label",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
+```
+
+### 2. Block JavaScript & CSS Integration (`{blockname}.js` & `{blockname}.css`)
+Once the block's content model is defined, write the JS and CSS code to decorate the rendered HTML structure.
+
+#### Block JavaScript (`{blockname}.js`)
+The JS entry point exports a `decorate(block)` function that receives the block's root DOM element.
+
+> [!IMPORTANT]
+> **Preserve DOM Structure**: Avoid heavy DOM manipulation or moving elements, as this can disrupt the Universal Editor's visual selection and authoring overlays. Instead, rely on *Field Collapse* and *Element Grouping* to output the correct layout structure, and use JS to apply semantic classes, bind event listeners, and perform lightweight enhancements.
+
+##### Example Block JavaScript (`/blocks/teaser/teaser.js`)
+```javascript
+export default function decorate(block) {
+  // Use JS to add semantic/styling helper classes to output HTML
+  const picture = block.querySelector('picture');
+  if (picture) {
+    picture.classList.add('image-wrapper');
+    picture.querySelector('img')?.classList.add('image');
+  }
+
+  // Label the content wrapper div
+  const content = block.querySelector(':scope > div:last-child');
+  if (content) {
+    content.classList.add('content');
+  }
+
+  // Add event listeners (e.g., hover effects)
+  const cta = block.querySelector('.button');
+  if (cta && picture) {
+    cta.addEventListener('mouseover', () => {
+      block.querySelector('.image').classList.add('zoom');
+    });
+    cta.addEventListener('mouseout', () => {
+      block.querySelector('.image').classList.remove('zoom');
+    });
+  }
+}
+```
+
+#### Block CSS (`{blockname}.css`)
+Scope all styling to the block using modern CSS nesting scoped under `.block.{blockname}` to prevent style leakage.
+
+##### Example Block CSS (`/blocks/teaser/teaser.css`)
+```css
+.block.teaser {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+
+  .image-wrapper {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    .image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease-in-out;
+
+      &.zoom {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .content {
+    position: absolute;
+    bottom: 0;
+    background: var(--background-color, #ffffff);
+    padding: 1.5rem;
+  }
+}
+```
+
+### 3. Configuration Resolution & Deployment
+- **Dynamic Referencing**: Universal Editor fragments are referenced dynamically in the central files under `/models/` directory:
+  - `/models/_component-models.json` includes `../blocks/*/_*.json#/models`
+  - `/models/_component-definition.json` includes `../blocks/*/_*.json#/definitions`
+  - `/models/_component-filters.json` includes `../blocks/*/_*.json#/filters`
+- **Linting**: Run `npm run lint` (or `npm run lint:js`) regularly to ensure JSON configuration fragments contain no syntax errors.
+- **Deploying to UE**: Commit and push changes to your feature branch. In Universal Editor, load the workspace with the query parameter `?ref=your-branch-name` to view the new block and authoring fields.
+
+## React Application Integration
+
+For more complex interactive utilities (like calculators or custom application flows), React applications are integrated into the AEM Edge Delivery Services environment as standalone built assets. The integration uses a **generic, metadata-driven** approach: authors specify the `.js` and `.css` asset paths directly in the block's content table, so a single block can load any React app without code changes.
+
+### Directory Structure
+- **React App Source Code**: Stored under `Apps/<react-app-folder>` (e.g., `Apps/<react-app-folder>/code`).
+- **Build Output Target**: Outputted directly to `/MobileServices/<react-app-folder>` (e.g., `/MobileServices/<react-app-folder>`).
+
+### Build Configuration
+React apps are typically configured using Vite. The `vite.config.ts` (or `vite.config.js`) should set the `build.outDir` to output directly to the AEM-served directory:
+
+```typescript
+const outDir = "../../../MobileServices/<react-app-folder>/"; // Adjust path based on your react app folder
+```
+
+The build scripts in `package.json` should copy necessary environment-specific configurations (e.g., `env.json`) and run the build command.
+
+### Local Development and Serving
+1. **React Dev Server**: To develop locally with hot module replacement (HMR), run the dev server inside the React app source directory:
+   ```bash
+   cd Apps/<react-app-folder>/code
+   npm install
+   npm run dev
+   ```
+2. **AEM CLI Serving**: To preview the integrated React app served via AEM's local server:
+   - Build the React app:
+     ```bash
+     npm run build:dev
+     ```
+     This compiles the assets into `/MobileServices/<react-app-folder>`.
+   - Start the AEM CLI at the project root:
+     ```bash
+     npx -y @adobe/aem-cli up --no-open --forward-browser-logs
+     ```
+   - Access the React app at `http://localhost:3000/MobileServices/<react-app-folder>/`.
+
+### Deployment and Environments
+The built assets inside `/MobileServices/<react-app-folder>` must be committed to the repository so they are synced and served by AEM Edge Delivery Services across all environments.
+
+### AEM Block Integration (Generic Metadata-Driven)
+The `fincalreact` block is a **generic React app loader**. Authors specify which React app to load by providing the asset paths (`script`, `css`) in the block's content table. No code changes to the block are needed to load different React apps.
+
+**Authoring Table Structure:**
+
+| Key    | Value                                          |
+|--------|-------------------------------------------------|
+| script | /MobileServices/MyApp/assets/app.js             |
+| css    | /MobileServices/MyApp/assets/app.css            |
+| class  | my-app-root (optional custom CSS class)         |
+| id     | my-app-root (optional custom root element ID)   |
+
+The block uses `readBlockConfig(block)` from `aem.js` to extract these key-value pairs from the authored content.
+
+**Key Principles:**
+1. **Shadow DOM for CSS Isolation**: Uses `block.attachShadow({ mode: 'open' })` to prevent React app styles from leaking into the AEM page, and vice versa.
+2. **Mounting Anchor**: Sets `window.reactAppShadow` and `window.reactAppRootElement` as generic global references for the React app to mount into (also retains `window.fincalShadow` for backward compatibility).
+3. **Asset Loading**: Dynamically injects the CSS `<link>` and JS `<script>` assets specified in the block metadata into the shadow root and document head respectively.
+
+**Block JS (`/blocks/reactapp/reactapp.js`)**:
+```javascript
+import { readBlockConfig } from '../../scripts/aem.js';
+
+export default async function decorate(block) {
+  // Read authored key-value pairs from the block table
+  const blockConfig = readBlockConfig(block);
+  const scriptPath = blockConfig.script || blockConfig.js;
+  const cssPath = blockConfig.css;
+  const customClass = blockConfig.class || '';
+  const customId = blockConfig.id || 'reactapp-app-root';
+
+  // Create shadow root for CSS isolation
+  const shadow = block.attachShadow({ mode: 'open' });
+  const root = document.createElement('div');
+  root.className = `rectapp-root ${customClass}`.trim();
+  root.id = customId;
+  shadow.appendChild(root);
+
+  // Load AEM global tokens & React app specific CSS into shadow root
+  const tokensLink = document.createElement('link');
+  tokensLink.rel = 'stylesheet';
+  tokensLink.href = '/styles/tokens.css';
+  shadow.appendChild(tokensLink);
+
+  if (cssPath) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = cssPath;
+    shadow.appendChild(link);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Support for **multiple** React apps on the same page
+  // ---------------------------------------------------------------------------
+  // Generate a unique identifier for this block instance. This allows each block
+  // to keep its own shadow root and root element without overwriting globals.
+  const appId = `reactApp-${Math.random().toString(36).substr(2, 9)}`;
+  // Store the shadow root in a map on the window so the React entry point can
+  // locate the correct container. This also preserves backward compatibility by
+  // keeping the legacy global references for existing single‑app setups.
+  window.reactAppInstances = window.reactAppInstances || {};
+  window.reactAppInstances[appId] = shadow;
+  // Attach the identifier to the root element for easy lookup in the React code.
+  root.dataset.reactAppId = appId;
+
+  // Legacy globals (kept for compatibility with existing docs & code)
+  window.reactAppShadow = shadow;
+  window.reactAppRootElement = root;
+  window.fincalShadow = shadow; // backward compatibility
+
+  // Load React JS bundle – remains unchanged
+  if (scriptPath) {
+    const script = document.createElement('script');
+    script.src = scriptPath;
+    script.type = 'module';
+    script.crossOrigin = 'anonymous';
+    document.head.appendChild(script);
+  }
+}
+```
+
+**React Entry Point Example (`Apps/<react-app-folder>/code/src/index.tsx`)**:
+```typescript
+import { createRoot } from 'react-dom/client';
+
+const mountApp = (selector: string, Component: React.FC) => {
+  // Find all containers matching the selector
+  document.querySelectorAll(selector).forEach((container) => {
+    if (!container) return;
+    // Determine the shadow root for this container
+    const appId = (container as HTMLElement).dataset.reactAppId;
+    const shadowRoot = appId && (window as any).reactAppInstances?.[appId];
+    const root = shadowRoot || document;
+    if (container && !container.dataset.appMounted) {
+      createRoot(container as Element).render(<Component />);
+      container.dataset.appMounted = 'true';
+    }
+  });
+};
+
+mountApp('.reactapp-root', App);
+```
+
 ## Testing & Quality Assurance
 
 ### Performance
