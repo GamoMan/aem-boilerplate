@@ -41,9 +41,9 @@ export default defineConfig(({ mode }) => {
   // vendor/runtime chunks). For multi-entry builds, keep default behaviour.
   const singleOutputOverrides: {
     inlineDynamicImports?: boolean;
-    chunkFileNames: string | ((chunkInfo: any) => string);
-    assetFileNames: string | ((assetInfo: any) => string);
-    entryFileNames: string | ((entryInfo: any) => string);
+    chunkFileNames: string | ((chunkInfo: unknown) => string);
+    assetFileNames: string | ((assetInfo: unknown) => string);
+    entryFileNames: string | ((entryInfo: unknown) => string);
   } = isSingleProject
       ? {
         // Prevent code-splitting for dynamic imports in single-entry builds

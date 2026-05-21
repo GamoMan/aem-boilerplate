@@ -74,9 +74,9 @@ export default async function decorate(block) {
       return null;
     };
 
-    const appPath = getBlockMetadata('app-path');
-    const appStyle = getBlockMetadata('app-style');
-    const appRoot = getBlockMetadata('app-root');
+    config.script = getBlockMetadata('app-path');
+    config.css = getBlockMetadata('app-style');
+    config.rootClass = getBlockMetadata('app-root');
 
     // if (block.classList.contains('retirement')) {
     //   type = 'retirement';
@@ -92,9 +92,9 @@ export default async function decorate(block) {
     // }
 
     // const legacyConfig = appConfig[type] || appConfig.retirement;
-    config.script = appPath;
-    config.css = appStyle;
-    config.rootClass = appRoot;
+    // config.script = appPath;
+    // config.css = appStyle;
+    // config.rootClass = appRoot;
   }
 
   block.classList.add('reactapp');
