@@ -45,8 +45,8 @@ All colors MUST be HSL.
   @font-face {
     font-family: "BangkokBank-Regular";
     src: local("BangkokBank-Regular"),
-      url("/fonts/BBLSans-Regular.woff") format("woff"),
-      url("/fonts/BBLSans-Regular.woff2") format("woff2");
+      url("/fonts/BBLSans-regular.woff") format("woff"),
+      url("/fonts/BBLSans-regular.woff2") format("woff2");
     font-style: normal;
   }
 

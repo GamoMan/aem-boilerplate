@@ -68,8 +68,8 @@
 
 @font-face {
   font-family: BangkokBank-Regular-Italic;
-  src: url("../fonts/BBLSans-RegularItalic.eot");
-  src: url("../fonts/BBLSans-RegularItalic.woff") format("woff"), url("../fonts/BBLSans-RegularItalic.woff2") format("woff2");
+  src: url("../fonts/BBLSans-regularItalic.eot");
+  src: url("../fonts/BBLSans-regularItalic.woff") format("woff"), url("../fonts/BBLSans-regularItalic.woff2") format("woff2");
   font-style: italic;
   font-display: swap;
 }

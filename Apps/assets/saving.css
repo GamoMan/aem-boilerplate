@@ -359,7 +359,7 @@ video {
 
 @font-face {
     font-family: BangkokBank-Regular;
-    src: local("BangkokBank-Regular"), url(/apps/fonts/BBLSans-Regular.woff) format("woff"), url(/apps/fonts/BBLSans-Regular.woff2) format("woff2");
+    src: local("BangkokBank-Regular"), url(/apps/fonts/BBLSans-regular.woff) format("woff"), url(/apps/fonts/BBLSans-regular.woff2) format("woff2");
     font-style: normal
 }
 
