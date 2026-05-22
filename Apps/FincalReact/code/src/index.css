@@ -45,24 +45,24 @@ All colors MUST be HSL.
   @font-face {
     font-family: "BangkokBank-Regular";
     src: local("BangkokBank-Regular"),
-      url("/fonts/BBLSans-regular.woff") format("woff"),
-      url("/fonts/BBLSans-regular.woff2") format("woff2");
+      url("/fonts/bblsans-regular.woff") format("woff"),
+      url("/fonts/bblsans-regular.woff2") format("woff2");
     font-style: normal;
   }
 
   @font-face {
     font-family: "BangkokBank-Medium";
     src: local("BangkokBank-Medium"),
-      url("/fonts/BBLSans-medium.woff") format("woff"),
-      url("/fonts/BBLSans-medium.woff2") format("woff2");
+      url("/fonts/bblsans-medium.woff") format("woff"),
+      url("/fonts/bblsans-medium.woff2") format("woff2");
     font-style: normal;
   }
 
   @font-face {
     font-family: "BangkokBank-Bold";
     src: local("BangkokBank-Bold"),
-      url("/fonts/BBLSans-bold.woff") format("woff"),
-      url("/fonts/BBLSans-bold.woff2") format("woff2");
+      url("/fonts/bblsans-bold.woff") format("woff"),
+      url("/fonts/bblsans-bold.woff2") format("woff2");
     font-style: normal;
   }
 
