@@ -359,19 +359,19 @@ video {
 
 @font-face {
     font-family: BangkokBank-Regular;
-    src: local("BangkokBank-Regular"), url(/apps/fonts/BBLSans-regular.woff) format("woff"), url(/apps/fonts/BBLSans-regular.woff2) format("woff2");
+    src: local("BangkokBank-Regular"), url(/apps/fonts/bblsans-regular.woff) format("woff"), url(/apps/fonts/bblsans-regular.woff2) format("woff2");
     font-style: normal
 }
 
 @font-face {
     font-family: BangkokBank-Medium;
-    src: local("BangkokBank-Medium"), url(/apps/fonts/BBLSans-medium.woff) format("woff"), url(/apps/fonts/BBLSans-medium.woff2) format("woff2");
+    src: local("BangkokBank-Medium"), url(/apps/fonts/bblsans-medium.woff) format("woff"), url(/apps/fonts/bblsans-medium.woff2) format("woff2");
     font-style: normal
 }
 
 @font-face {
     font-family: BangkokBank-Bold;
-    src: local("BangkokBank-Bold"), url(/apps/fonts/BBLSans-bold.woff) format("woff"), url(/apps/fonts/BBLSans-bold.woff2) format("woff2");
+    src: local("BangkokBank-Bold"), url(/apps/fonts/bblsans-bold.woff) format("woff"), url(/apps/fonts/bblsans-bold.woff2) format("woff2");
     font-style: normal
 }
 
